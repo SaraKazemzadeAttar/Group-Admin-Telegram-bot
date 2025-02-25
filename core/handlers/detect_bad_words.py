@@ -8,19 +8,26 @@ bad_words_file = os.path.join(os.path.dirname(__file__), "list_of_bad_words.txt"
 bad_word_list = []
 with open(bad_words_file, "r", encoding="utf-8") as file:
     bad_word_list = [line.strip() for line in file.readlines()]
-    print(bad_word_list)
-    
-# Load bad words from the file
-profanity.load_censor_words()
 
 def has_bad_word(text):
     """Translate message to English and check for bad words."""
     try:
         translated_text = GoogleTranslator(source="auto", target="en").translate(text)
-        return profanity.contains_profanity(translated_text)
+        
+        # Check AI-based detection
+        if profanity.contains_profanity(translated_text):
+            return True
+        
+        # Check against custom bad words list
+        for bad_word in bad_word_list:
+            if bad_word.lower() in translated_text.lower():
+                return True
+        
+        return False
     except Exception as e:
         print(f"Translation error: {e}")
-        return False 
+        return False  # If translation fails, assume no bad word
+
 
 
 warnings = {}

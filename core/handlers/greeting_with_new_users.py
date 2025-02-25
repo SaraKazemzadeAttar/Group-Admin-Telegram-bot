@@ -2,6 +2,21 @@ import telebot
 from telebot.types import ChatPermissions
 import datetime
 
+GROUP_RULES = """
+📜 **Group Rules** 📜
+1️⃣ Respect all members.
+2️⃣ No offensive language.
+4️⃣ Follow admin instructions.
+6️⃣ **Admins can:**
+    - `/ban` users 🚫
+    - `/unban` users ✅
+    - `/kick` users 🚪
+    - `/pin` messages 📌
+    - `/promote` users to admin 🔼
+    - `/demote` admins to members 🔽
+⚠️ Breaking rules will result in warnings, kicks, or bans.
+"""
+
 def register(bot):
     @bot.chat_join_request_handler()
     def join_request_handler(request):
